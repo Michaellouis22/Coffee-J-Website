@@ -1,141 +1,320 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Coffee J - Kedai Kopi & Resto</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Coffee J — Kedai Kopi &amp; Resto, Palembang</title>
+<meta name="description" content="Coffee J, kedai kopi &amp; resto di Palembang. Kopi Jadoel, roti bakar, soto, dan sate — buka tiap hari 06.30–23.00. Pesan lewat WhatsApp.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,700;1,400;1,700&family=Oswald:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <!-- Navigation -->
-    <nav class="navbar">
-        <div class="container">
-            <div class="logo">Coffee J</div>
-            <ul class="nav-links">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#menu">Menu</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
+
+<div class="announce">
+  Buka setiap hari 06.30–23.00 · Live music tiap malam · Pesan lewat WhatsApp
+</div>
+
+<header class="header">
+  <div class="header__inner">
+    <a class="logo" href="#top">
+      <span class="logo__badge">CJ</span>
+      <span class="logo__text">
+        <span class="logo__name">Coffee J</span>
+        <span class="logo__sub">Kedai Kopi &amp; Resto</span>
+      </span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Utama">
+      <a href="#menu">Menu</a>
+      <a href="#story">Cerita</a>
+      <a href="#tempat">Tempat</a>
+      <a href="#visit">Kunjungi</a>
     </nav>
 
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="container">
-            <h1>Welcome to Coffee J</h1>
-            <p>Kedai Kopi & Resto - Traditional Flavors, Modern Vibes</p>
-            <a href="#menu" class="btn">View Menu</a>
-        </div>
-    </section>
+    <div class="header__actions">
+      <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Buka menu navigasi">☰</button>
+      <button class="cart-btn" id="cart-open" type="button">
+        <span class="cart-btn__label">Keranjang</span>
+        <span class="cart-btn__count" id="cart-count" hidden>0</span>
+      </button>
+    </div>
+  </div>
+</header>
 
-    <!-- About Section -->
-    <section id="about" class="about">
-        <div class="container">
-            <h2>About Us</h2>
-            <p>Coffee J is a cozy coffee shop and restaurant in Palembang, blending traditional Indonesian flavors with modern design. We're the perfect spot for breakfast, casual meetings, or group events with family and friends.</p>
-            <div class="features">
-                <div class="feature">
-                    <h3>☕ Great Coffee</h3>
-                    <p>Freshly brewed coffee and specialty drinks</p>
-                </div>
-                <div class="feature">
-                    <h3>🍽️ Delicious Food</h3>
-                    <p>Traditional Indonesian cuisine and light snacks</p>
-                </div>
-                <div class="feature">
-                    <h3>🎵 Live Music</h3>
-                    <p>Enjoy music performances daily</p>
-                </div>
-                <div class="feature">
-                    <h3>👥 Event Space</h3>
-                    <p>Perfect for meetings, gatherings, and celebrations</p>
-                </div>
-            </div>
-        </div>
-    </section>
+<main id="top">
 
-    <!-- Menu Section -->
-    <section id="menu" class="menu">
-        <div class="container">
-            <h2>Our Menu</h2>
-            <div class="menu-grid">
-                <div class="menu-item">
-                    <h3>Coffee Specialties</h3>
-                    <ul>
-                        <li>Kopi Jadoel Kopi Hitam</li>
-                        <li>Kopi Janji Suci</li>
-                        <li>Specialty Espresso</li>
-                        <li>Iced Coffee</li>
-                    </ul>
-                </div>
-                <div class="menu-item">
-                    <h3>Food</h3>
-                    <ul>
-                        <li>Nasi Goreng Jadul</li>
-                        <li>Soto Sapi</li>
-                        <li>Sate</li>
-                        <li>Soto Jakarta</li>
-                    </ul>
-                </div>
-                <div class="menu-item">
-                    <h3>Snacks & Pastries</h3>
-                    <ul>
-                        <li>Roti Bakar Coklat Keju</li>
-                        <li>Wedang Ronde</li>
-                        <li>Various Light Snacks</li>
-                        <li>Desserts</li>
-                    </ul>
-                </div>
-                <div class="menu-item">
-                    <h3>Beverages</h3>
-                    <ul>
-                        <li>Hot Coffee Varieties</li>
-                        <li>Iced Drinks</li>
-                        <li>Teas & Herbal</li>
-                        <li>Soft Drinks</li>
-                    </ul>
-                </div>
-            </div>
-            <p class="menu-note">For detailed menu and pricing, visit us or contact us!</p>
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap hero__grid">
+      <div>
+        <p class="eyebrow">Palembang · Sejak pagi sampai larut</p>
+        <h1>Kopi jadoel,<br>meja panjang,<br>malam yang<br>tak buru-buru.</h1>
+        <p class="hero__lede">
+          Kedai kopi dan resto di Simpang PHB — kolam koi di halaman, live music
+          hampir tiap malam, dan dapur yang buka dari jam setengah tujuh pagi.
+        </p>
+        <div class="hero__actions">
+          <a class="btn btn--primary" href="#menu">Lihat menu &amp; pesan</a>
+          <a class="btn btn--outline" href="#visit">Arah ke sini</a>
         </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <h2>Visit Us</h2>
-            <div class="contact-info">
-                <div class="info-item">
-                    <h3>📍 Location</h3>
-                    <p>Jl. Jaksa Agung R. Soeprapto No. 26</p>
-                    <p>Simpang PHB, Bukit, 26 Ilir D.I</p>
-                    <p>Ilir Barat I, Palembang City</p>
-                    <p>South Sumatra 30128, Indonesia</p>
-                </div>
-                <div class="info-item">
-                    <h3>📞 Contact</h3>
-                    <p><a href="tel:+6281178865888">+62 811 788 65 88</a></p>
-                </div>
-                <div class="info-item">
-                    <h3>🕐 Hours</h3>
-                    <p>06:30 - 23:00 (Every Day)</p>
-                </div>
-                <div class="info-item">
-                    <h3>📱 Follow Us</h3>
-                    <p><a href="https://www.instagram.com/coffeej_palembang/" target="_blank">Instagram: @coffeej_palembang</a></p>
-                </div>
-            </div>
+        <div class="hero__meta">
+          <div><strong>06.30 – 23.00</strong> Setiap hari</div>
+          <div><strong>Rp 25–50rb</strong> Per orang</div>
+          <div><strong>Live music</strong> Hampir tiap malam</div>
         </div>
-    </section>
+      </div>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <p>&copy; 2024 Coffee J - Kedai Kopi & Resto. All rights reserved.</p>
+      <div class="hero__art">
+        <span class="sticker">Kopi Jadoel</span>
+        <div class="photo photo--main" role="img" aria-label="Foto suasana Coffee J — placeholder">
+          <div>
+            <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 18h22v12a10 10 0 0 1-10 10h-2A10 10 0 0 1 10 30V18Z"/><path d="M32 21h3a5 5 0 0 1 0 10h-3"/><path d="M16 12c0-2 2-2 2-4M23 12c0-2 2-2 2-4"/></svg>
+            <div class="photo__label">Foto suasana kedai</div>
+          </div>
         </div>
-    </footer>
+        <div class="photo photo--round" role="img" aria-label="Foto kolam koi — placeholder">
+          <div class="photo__label">Kolam koi</div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <script src="script.js"></script>
+  <!-- ============ MARQUEE ============ -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span>Kopi Jadoel</span><span>Roti Bakar Coklat Keju</span><span>Kolam Koi</span><span>Live Music</span><span>Ruang Meeting</span><span>Buka 06.30–23.00</span>
+      <span>Kopi Jadoel</span><span>Roti Bakar Coklat Keju</span><span>Kolam Koi</span><span>Live Music</span><span>Ruang Meeting</span><span>Buka 06.30–23.00</span>
+    </div>
+  </div>
+
+  <!-- ============ MENU ============ -->
+  <section class="section section--cream" id="menu">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Menu</p>
+        <h2>Yang bikin orang balik lagi</h2>
+        <p>
+          Pilih, masukkan keranjang, lalu kirim pesanan lewat WhatsApp —
+          kami konfirmasi langsung dari counter.
+        </p>
+      </div>
+
+      <div class="menu-bar" id="menu-filters" role="group" aria-label="Saring menu per kategori"></div>
+
+      <div class="menu-grid" id="menu-grid"></div>
+
+      <p class="menu-note">
+        <strong>Catatan harga.</strong> Angka di atas masih perkiraan untuk perencanaan,
+        dibawa dari versi situs sebelumnya — belum harga resmi counter. Ganti dengan
+        daftar harga asli sebelum situs ini dipublikasikan.
+      </p>
+    </div>
+  </section>
+
+  <!-- ============ STORY ============ -->
+  <section class="split" id="story">
+    <div class="split__text">
+      <p class="eyebrow">Cerita kami</p>
+      <h2>Bukan sekadar tempat singgah</h2>
+      <p>
+        Coffee J tumbuh jadi tempat orang Palembang menghabiskan waktu, bukan
+        cuma membeli kopi. Rasa tradisional yang ditata ulang, dapur yang
+        menyajikan masakan Indonesia dan Asia, dan ruang yang sengaja dibuat
+        betah — dari sarapan pagi sampai musik terakhir malam itu.
+      </p>
+      <a class="btn btn--primary" href="#menu">Lihat menu lengkap</a>
+    </div>
+    <div class="photo" role="img" aria-label="Foto interior Coffee J — placeholder">
+      <div>
+        <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 24v-6a4 4 0 0 1 4-4h22a4 4 0 0 1 4 4v6"/><rect x="5" y="24" width="38" height="12" rx="4"/><path d="M14 36v3M34 36v3"/></svg>
+        <div class="photo__label">Foto interior / halaman</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ TEMPAT ============ -->
+  <section class="section section--bone" id="tempat">
+    <div class="wrap">
+      <div class="section-head">
+        <p class="eyebrow">Tempat</p>
+        <h2>Ruang untuk berapa lama pun</h2>
+        <p>Sarapan cepat, rapat siang, atau nongkrong sampai tutup — semuanya muat.</p>
+      </div>
+
+      <div class="amenities">
+        <div class="amenity">
+          <div class="amenity__frame"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 30c6-8 14-12 22-12 6 0 10 3 14 6-4 3-8 6-14 6-8 0-16-4-22-12Z"/><circle cx="17" cy="27" r="1.4" fill="currentColor"/><path d="M42 24c-2 3-2 7 0 10"/></svg></div>
+          <h3>Kolam koi</h3>
+          <p>Tempat duduk luar di bawah pohon, menghadap kolam ikan koi.</p>
+        </div>
+        <div class="amenity">
+          <div class="amenity__frame"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 24v-6a4 4 0 0 1 4-4h22a4 4 0 0 1 4 4v6"/><rect x="5" y="24" width="38" height="12" rx="4"/><path d="M14 36v3M34 36v3"/></svg></div>
+          <h3>VIP room</h3>
+          <p>Ruang tertutup untuk rombongan yang ingin lebih privat.</p>
+        </div>
+        <div class="amenity">
+          <div class="amenity__frame"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="19" cy="17" r="6"/><path d="M8 38c0-6 5-10 11-10s11 4 11 10"/><circle cx="34" cy="19" r="5"/><path d="M33 29c4 1 7 4 7 9"/></svg></div>
+          <h3>Ruang meeting</h3>
+          <p>Muat sampai 20 orang — atur jadwalnya dulu lewat WhatsApp.</p>
+        </div>
+        <div class="amenity">
+          <div class="amenity__frame"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 33V12l18-4v21"/><circle cx="15" cy="33" r="4.5"/><circle cx="33" cy="29" r="4.5"/></svg></div>
+          <h3>Live music</h3>
+          <p>Penampilan hampir tiap malam — lineup-nya di Instagram.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ VISIT ============ -->
+  <section class="section section--cream" id="visit">
+    <div class="wrap visit">
+      <div>
+        <p class="eyebrow">Kunjungi</p>
+        <h2 style="font-size:var(--text-heading-lg);line-height:1.15;">Simpang PHB, Bukit</h2>
+        <dl class="visit__rows">
+          <div class="visit__row">
+            <dt>Alamat</dt>
+            <dd>Jl. Jaksa Agung R. Soeprapto, Simpang PHB, Bukit,<br>Ilir Barat I, Kota Palembang, Sumatera Selatan 30128</dd>
+          </div>
+          <div class="visit__row">
+            <dt>Jam buka</dt>
+            <dd>Setiap hari, 06.30 – 23.00</dd>
+          </div>
+          <div class="visit__row">
+            <dt>WhatsApp</dt>
+            <dd><a href="https://wa.me/6281178886588" target="_blank" rel="noopener">+62 811 788 65 88</a></dd>
+          </div>
+          <div class="visit__row">
+            <dt>Instagram</dt>
+            <dd><a href="https://instagram.com/coffeej_palembang" target="_blank" rel="noopener">@coffeej_palembang</a></dd>
+          </div>
+        </dl>
+        <div class="hero__actions" style="margin-top:32px;">
+          <a class="btn btn--primary" href="https://wa.me/6281178886588" target="_blank" rel="noopener">Chat WhatsApp</a>
+          <a class="btn btn--outline" href="https://maps.google.com/?q=Coffee+J+Kedai+Kopi+dan+Resto+Palembang" target="_blank" rel="noopener">Buka di Maps</a>
+        </div>
+      </div>
+      <div class="photo" role="img" aria-label="Foto tampak depan kedai — placeholder">
+        <div>
+          <svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 20 24 8l18 12"/><path d="M10 20v20h28V20"/><path d="M19 40V28h10v12"/></svg>
+          <div class="photo__label">Foto tampak depan</div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="wrap">
+    <div class="footer__grid">
+      <div>
+        <a class="logo" href="#top">
+          <span class="logo__badge">CJ</span>
+          <span class="logo__text">
+            <span class="logo__name">Coffee J</span>
+            <span class="logo__sub">Kedai Kopi &amp; Resto</span>
+          </span>
+        </a>
+        <p class="footer__blurb">
+          Kedai kopi &amp; resto di Palembang. Buka dari pagi sampai malam,
+          dengan kolam koi, ruang meeting, dan live music.
+        </p>
+      </div>
+      <div>
+        <h4>Jelajahi</h4>
+        <ul>
+          <li><a href="#menu">Menu</a></li>
+          <li><a href="#story">Cerita</a></li>
+          <li><a href="#tempat">Tempat</a></li>
+          <li><a href="#visit">Kunjungi</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Hubungi</h4>
+        <ul>
+          <li><a href="https://wa.me/6281178886588" target="_blank" rel="noopener">+62 811 788 65 88</a></li>
+          <li><a href="https://instagram.com/coffeej_palembang" target="_blank" rel="noopener">@coffeej_palembang</a></li>
+          <li>06.30 – 23.00, setiap hari</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer__base">
+      <span>© <span id="year">2026</span> Coffee J, Palembang.</span>
+      <span>Jl. Jaksa Agung R. Soeprapto, Simpang PHB, Ilir Barat I.</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ CART DRAWER ============ -->
+<div class="scrim" id="scrim"></div>
+
+<aside class="drawer" id="drawer" aria-hidden="true" aria-label="Keranjang dan checkout">
+  <div class="drawer__head">
+    <h2 id="drawer-title">Keranjang</h2>
+    <button class="drawer__close" id="drawer-close" type="button" aria-label="Tutup keranjang">×</button>
+  </div>
+
+  <!-- Panel: cart -->
+  <div id="panel-cart" class="panel">
+    <div class="drawer__body" id="cart-lines"></div>
+    <div class="drawer__foot" id="cart-foot" hidden>
+      <dl class="totals">
+        <dt>Total</dt>
+        <dd id="cart-total">Rp 0</dd>
+      </dl>
+      <button class="btn btn--primary btn--block" id="to-checkout" type="button">Lanjut ke checkout</button>
+      <p class="form-note">Pembayaran dilakukan di tempat atau sesuai kesepakatan di WhatsApp.</p>
+    </div>
+  </div>
+
+  <!-- Panel: checkout -->
+  <div id="panel-checkout" class="panel" hidden>
+    <form class="drawer__body" id="checkout-form">
+      <button class="drawer__back" id="back-to-cart" type="button">← Kembali ke keranjang</button>
+
+      <div class="field">
+        <label for="name">Nama</label>
+        <input id="name" name="name" type="text" required placeholder="Nama kamu" autocomplete="name">
+      </div>
+
+      <div class="field">
+        <label id="mode-label">Tipe pesanan</label>
+        <div class="choices" role="radiogroup" aria-labelledby="mode-label">
+          <input type="radio" name="mode" id="mode-dine" value="Dine-in" checked>
+          <label for="mode-dine">Dine-in</label>
+          <input type="radio" name="mode" id="mode-take" value="Takeaway">
+          <label for="mode-take">Takeaway</label>
+          <input type="radio" name="mode" id="mode-deliv" value="Delivery">
+          <label for="mode-deliv">Delivery</label>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="where" id="where-label">Nomor meja (opsional)</label>
+        <input id="where" name="where" type="text" placeholder="mis. Meja 4">
+      </div>
+
+      <div class="field">
+        <label for="notes">Catatan</label>
+        <textarea id="notes" name="notes" placeholder="Es sedikit, sambal dipisah, dll."></textarea>
+      </div>
+
+      <button class="btn btn--primary btn--block" type="submit">Kirim pesanan via WhatsApp</button>
+      <p class="form-note">
+        Pesanan dibuka sebagai chat WhatsApp ke counter Coffee J.
+        Belum terkirim sampai kamu tekan kirim di WhatsApp.
+      </p>
+    </form>
+  </div>
+</aside>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="app.js"></script>
+<script>document.getElementById('year').textContent = new Date().getFullYear();</script>
 </body>
 </html>

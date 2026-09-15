@@ -6,9 +6,9 @@ const root = __dirname;
 const port = process.env.PORT || 5501;
 
 const types = {
-  '.html': 'text/html',
-  '.css': 'text/css',
-  '.js': 'text/javascript',
+  '.html': 'text/html; charset=utf-8',
+  '.css': 'text/css; charset=utf-8',
+  '.js': 'text/javascript; charset=utf-8',
   '.json': 'application/json',
   '.svg': 'image/svg+xml',
   '.png': 'image/png',
