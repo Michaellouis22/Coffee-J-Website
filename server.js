@@ -28,7 +28,10 @@ http.createServer((req, res) => {
       return;
     }
     const ext = path.extname(filePath);
-    res.writeHead(200, { 'Content-Type': MIME[ext] || 'application/octet-stream' });
+    res.writeHead(200, {
+      // dev server: never let the browser hold on to a stale stylesheet
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
+      'Content-Type': MIME[ext] || 'application/octet-stream' });
     res.end(data);
   });
 }).listen(PORT, () => {
