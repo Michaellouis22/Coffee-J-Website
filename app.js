@@ -4,7 +4,7 @@
    =========================================================== */
 
 /* WhatsApp number in international format, digits only. */
-const WA_NUMBER = '6281178886588';
+const WA_NUMBER = '628117886588';
 
 const MENU = window.CJ_MENU || [];
 const CATEGORIES = window.CJ_CATEGORIES || [];
@@ -248,8 +248,10 @@ function submitOrder(e) {
   e.preventDefault();
   if (!cartCount()) return;
   const url = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(buildOrderMessage(e.target))}`;
-  window.open(url, '_blank', 'noopener');
   showToast('Membuka WhatsApp…');
+  /* Navigate this tab rather than opening one: mobile browsers routinely
+     block script-opened windows, which makes the button look broken. */
+  window.location.href = url;
 }
 
 /* ---------- Wiring ---------- */
