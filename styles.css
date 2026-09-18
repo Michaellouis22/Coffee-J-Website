@@ -612,9 +612,42 @@ a { color: inherit; }
   width: auto;
   flex: 0 1 auto;
   object-fit: contain;
+  transform-origin: 50% 100%;   /* pivot at the feet, so they never look airborne */
+  animation: cj-bob 4.6s ease-in-out infinite;
+  transition: transform .35s ease;
 }
 /* The server's raised tray makes that figure read taller than it is. */
-.characters__fig--server { height: clamp(292px, 33vw, 458px); }
+.characters__fig--server {
+  height: clamp(292px, 33vw, 458px);
+  /* Offset timing so the two never bob in lockstep, which reads as mechanical. */
+  animation-duration: 5.7s;
+  animation-delay: -2.1s;
+}
+
+/* A breath, not a bounce — a few pixels is enough to feel alive. */
+@keyframes cj-bob {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%      { transform: translateY(-9px) rotate(-.5deg); }
+}
+
+.characters__fig:hover { transform: translateY(-14px) scale(1.03); animation-play-state: paused; }
+
+/* Entrance: the pair rises into place the first time the section is reached.
+   Kept on the container so it never fights the per-figure bob transform. */
+.characters { opacity: 1; }
+.characters.is-pending { opacity: 0; transform: translateY(28px); }
+.characters.is-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity .7s ease, transform .7s cubic-bezier(.22,.7,.3,1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .characters__fig { animation: none; transition: none; }
+  .characters__fig:hover { transform: none; }
+  .characters.is-pending { opacity: 1; transform: none; }
+  .characters.is-in { transition: none; }
+}
 
 /* ---------- Footer ---------- */
 

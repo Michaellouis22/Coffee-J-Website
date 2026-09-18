@@ -254,6 +254,36 @@ function submitOrder(e) {
   window.location.href = url;
 }
 
+/* ---------- Staff characters ---------- */
+
+/* The pair rises into place the first time the Kunjungi section is reached.
+   Hidden only once the observer is confirmed working, so the characters stay
+   visible in browsers without IntersectionObserver rather than never showing. */
+function initCharacterEntrance() {
+  const el = document.querySelector('.characters');
+  if (!el || !('IntersectionObserver' in window)) return;
+
+  el.classList.add('is-pending');
+
+  const reveal = () => {
+    el.classList.remove('is-pending');
+    el.classList.add('is-in');
+  };
+
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
+      reveal();
+      io.disconnect();
+    });
+  }, { threshold: 0.2 });
+
+  io.observe(el);
+
+  /* Already on screen at load (short viewport, deep link): reveal immediately. */
+  if (el.getBoundingClientRect().top < window.innerHeight) reveal();
+}
+
 /* ---------- Wiring ---------- */
 
 function init() {
@@ -300,6 +330,8 @@ function init() {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape' && byId('drawer').classList.contains('is-open')) closeDrawer();
   });
+
+  initCharacterEntrance();
 
   const toggle = byId('nav-toggle');
   toggle.addEventListener('click', () => {
