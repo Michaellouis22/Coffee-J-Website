@@ -453,12 +453,14 @@ a { color: inherit; }
   top: 68px;
   z-index: 40;
   background: var(--latte);
-  padding: 20px 0 16px;
+  padding: 20px 0 8px;
   margin-bottom: 8px;
 }
 
 .menu-bar {
-  padding: 0;
+  /* The horizontal scrollbar is drawn at this box's bottom edge, so the
+     padding is what keeps it off the pills rather than touching them. */
+  padding: 0 0 12px;
   margin: 0;
   overflow-x: auto;
   flex-wrap: nowrap;
