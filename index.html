@@ -97,7 +97,16 @@
 
       <div class="menu-grid" id="featured-grid"></div>
 
-      <div class="menu-bar" id="menu-filters" role="group" aria-label="Saring menu per kategori"></div>
+      <div class="menu-tools">
+        <div class="menu-search">
+          <svg class="menu-search__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+          <input id="menu-search" type="text" autocomplete="off"
+                 placeholder="Cari menu — mis. kopi, soto, roti bakar"
+                 aria-label="Cari menu">
+          <button id="menu-search-clear" type="button" aria-label="Hapus pencarian" hidden>&times;</button>
+        </div>
+        <div class="menu-bar" id="menu-filters" role="group" aria-label="Saring menu per kategori"></div>
+      </div>
 
       <div id="menu-list"></div>
     </div>

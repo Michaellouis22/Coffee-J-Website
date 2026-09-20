@@ -446,18 +446,95 @@ a { color: inherit; }
 
 /* ---------- Full menu: grouped rows ---------- */
 
-.menu-bar {
+/* Search and the category pills travel together, pinned under the header
+   so both stay reachable while scrolling a 300-item menu. */
+.menu-tools {
   position: sticky;
   top: 68px;
   z-index: 40;
   background: var(--latte);
-  padding: 20px 0;
+  padding: 20px 0 16px;
   margin-bottom: 8px;
+}
+
+.menu-bar {
+  padding: 0;
+  margin: 0;
   overflow-x: auto;
   flex-wrap: nowrap;
   scrollbar-width: thin;
 }
 .menu-bar .filter { flex: 0 0 auto; }
+
+/* ---------- Menu search ---------- */
+
+.menu-search {
+  position: relative;
+  display: flex;
+  align-items: center;
+  margin-bottom: 14px;
+  max-width: 520px;
+}
+.menu-search__icon {
+  position: absolute;
+  left: 18px;
+  width: 18px; height: 18px;
+  opacity: .5;
+  pointer-events: none;
+}
+.menu-search input {
+  width: 100%;
+  font-family: var(--font-body);
+  font-size: var(--text-body-lg);
+  color: var(--espresso);
+  background: var(--bone);
+  border: 1px solid var(--sand);
+  border-radius: var(--radius-full);
+  padding: 13px 44px 13px 46px;
+}
+.menu-search input::placeholder { color: var(--espresso); opacity: .55; }
+.menu-search input:focus {
+  outline: 2px solid var(--terracotta);
+  outline-offset: 1px;
+  border-color: transparent;
+}
+#menu-search-clear {
+  position: absolute;
+  right: 12px;
+  width: 26px; height: 26px;
+  border: none;
+  border-radius: var(--radius-full);
+  background: var(--sand);
+  color: var(--espresso);
+  font-size: 17px;
+  line-height: 1;
+  cursor: pointer;
+}
+#menu-search-clear:hover { background: var(--terracotta); color: var(--bone); }
+
+.search-summary { font-size: 13px; opacity: .75; margin: 0 0 24px; }
+.search-empty {
+  text-align: center;
+  padding: 56px 20px;
+  border: 1px solid var(--sand);
+  border-radius: var(--radius-card);
+  background: var(--bone);
+}
+.search-empty strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--text-heading-sm);
+  font-weight: 400;
+  letter-spacing: .03em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+.search-empty p { margin: 0; font-size: var(--text-body); opacity: .8; }
+
+@media (max-width: 680px) {
+  .menu-search { max-width: none; }
+  .menu-search input { font-size: 15px; }
+}
 
 .group { margin-bottom: 56px; }
 

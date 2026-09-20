@@ -28,6 +28,19 @@ const focusStyle = (item) => (item.focus ? ` style="object-position:${item.focus
 const STORAGE_KEY = 'coffeej.cart.v1';
 let cart = {};
 let activeCat = 'all';
+let query = '';
+
+/* Fold case and strip accents, so "creme" finds "Crème" and "TEH" finds "Teh". */
+const norm = (s) => String(s).toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
+
+/* Match on the dish name, its description and its category label — so searching
+   "kopi" finds the drink and the whole Kopi section, and every word must hit,
+   which lets "nasi goreng seafood" narrow properly. */
+function matches(item, q) {
+  const cat = CATEGORIES.find((c) => c.id === item.cat);
+  const hay = norm(`${item.name} ${item.desc || ''} ${cat ? cat.label : ''}`);
+  return q.split(/\s+/).filter(Boolean).every((word) => hay.includes(word));
+}
 
 function loadCart() {
   try {
@@ -91,10 +104,31 @@ function renderCatNav() {
 }
 
 function renderMenu() {
-  const cats = activeCat === 'all' ? CATEGORIES : CATEGORIES.filter((c) => c.id === activeCat);
+  const q = norm(query.trim());
+  const searching = q.length > 0;
 
-  byId('menu-list').innerHTML = cats.map((cat) => {
-    const items = MENU.filter((m) => m.cat === cat.id);
+  /* A search looks across the whole menu; the category pills only apply
+     when nothing is typed. The two are deliberately mutually exclusive. */
+  const pool = searching ? MENU.filter((m) => matches(m, q)) : MENU;
+  const cats = (searching || activeCat === 'all')
+    ? CATEGORIES
+    : CATEGORIES.filter((c) => c.id === activeCat);
+
+  const summary = searching
+    ? `<p class="search-summary">${pool.length} menu cocok dengan “${escapeHtml(query.trim())}”</p>`
+    : '';
+
+  if (searching && !pool.length) {
+    byId('menu-list').innerHTML = `
+      <div class="search-empty">
+        <strong>Tidak ada menu yang cocok</strong>
+        <p>Coba kata lain, misalnya “kopi”, “ayam”, atau “roti bakar”.</p>
+      </div>`;
+    return;
+  }
+
+  byId('menu-list').innerHTML = summary + cats.map((cat) => {
+    const items = pool.filter((m) => m.cat === cat.id);
     if (!items.length) return '';
     return `
       <section class="group" id="cat-${cat.id}">
@@ -254,6 +288,34 @@ function submitOrder(e) {
   window.location.href = url;
 }
 
+/* ---------- Menu search ---------- */
+
+function initMenuSearch() {
+  const input = byId('menu-search');
+  const clear = byId('menu-search-clear');
+  if (!input) return;
+
+  const apply = () => {
+    query = input.value;
+    clear.hidden = query.trim().length === 0;
+    /* Searching spans every category, so reset the pills to "Semua". */
+    if (query.trim() && activeCat !== 'all') { activeCat = 'all'; renderCatNav(); }
+    renderMenu();
+  };
+
+  input.addEventListener('input', apply);
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && input.value) { input.value = ''; apply(); }
+  });
+
+  clear.addEventListener('click', () => {
+    input.value = '';
+    apply();
+    input.focus();
+  });
+}
+
 /* ---------- Staff characters ---------- */
 
 /* The pair rises into place the first time the Kunjungi section is reached.
@@ -297,9 +359,13 @@ function init() {
     const btn = e.target.closest('[data-cat]');
     if (!btn) return;
     activeCat = btn.dataset.cat;
+    /* Picking a category is a fresh start — drop any search term. */
+    if (query) { query = ''; byId('menu-search').value = ''; byId('menu-search-clear').hidden = true; }
     renderCatNav();
     renderMenu();
   });
+
+  initMenuSearch();
 
   /* One delegated handler covers featured cards and every menu row. */
   document.addEventListener('click', (e) => {
