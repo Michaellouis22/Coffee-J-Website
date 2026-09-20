@@ -1175,3 +1175,41 @@ a { color: inherit; }
 }
 /* No description yet: keep the block compact instead of a tall empty gap. */
 .lightbox__info.is-bare .lightbox__foot { margin-top: 28px; }
+
+/* ---------- Lightbox motion ----------
+   The panel grows out of whichever photo was tapped: the open handler sets
+   transform-origin to that thumbnail's centre, so the zoom starts there
+   rather than from the middle of the screen. */
+
+.lightbox__backdrop {
+  opacity: 0;
+  transition: opacity .3s ease;
+}
+.lightbox.is-open .lightbox__backdrop { opacity: 1; }
+
+.lightbox__panel {
+  opacity: 0;
+  transform: scale(.88);
+  will-change: transform, opacity;
+  transition: opacity .26s ease, transform .36s cubic-bezier(.22, .8, .26, 1);
+}
+.lightbox.is-open .lightbox__panel {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* The photo itself settles a fraction slower, so it reads as the subject
+   arriving rather than the whole box snapping into place. */
+.lightbox__media img {
+  transform: scale(1.04);
+  transition: transform .5s cubic-bezier(.22, .8, .26, 1);
+}
+.lightbox.is-open .lightbox__media img { transform: scale(1); }
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox__backdrop,
+  .lightbox__panel,
+  .lightbox__media img { transition: none; }
+  .lightbox__panel { opacity: 1; transform: none; }
+  .lightbox__media img { transform: none; }
+}

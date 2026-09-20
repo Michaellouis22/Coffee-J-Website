@@ -296,11 +296,13 @@ function submitOrder(e) {
 /* ---------- Dish lightbox ---------- */
 
 let lightboxItem = null;
+let lightboxTimer = null;
 let lastFocused = null;
 
-function openLightbox(id) {
+function openLightbox(id, originEl) {
   const item = MENU.find((m) => m.id === id);
   if (!item || !item.photo) return;
+  clearTimeout(lightboxTimer);
   lightboxItem = item;
   lastFocused = document.activeElement;
 
@@ -319,14 +321,42 @@ function openLightbox(id) {
   tagEl.hidden = !item.tag;
   byId('lightbox-price').textContent = rupiah(item.price);
 
-  byId('lightbox').hidden = false;
+  const lb = byId('lightbox');
+  const panel = lb.querySelector('.lightbox__panel');
+  lb.hidden = false;
   document.body.style.overflow = 'hidden';
+
+  /* Grow the panel out of the photo that was tapped. The panel is measured
+     with its transform removed, otherwise the starting scale would skew the
+     origin we are about to calculate from it. */
+  panel.style.transformOrigin = '';
+  if (originEl && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const prev = panel.style.transition;
+    panel.style.transition = 'none';
+    panel.style.transform = 'none';
+    const p = panel.getBoundingClientRect();
+    const o = originEl.getBoundingClientRect();
+    panel.style.transformOrigin =
+      `${o.left + o.width / 2 - p.left}px ${o.top + o.height / 2 - p.top}px`;
+    panel.style.transform = '';
+    void panel.offsetWidth;          /* flush, so the reset is not animated */
+    panel.style.transition = prev;
+  }
+
+  requestAnimationFrame(() => lb.classList.add('is-open'));
   byId('lightbox-close').focus();
 }
 
 function closeLightbox() {
-  byId('lightbox').hidden = true;
+  const lb = byId('lightbox');
+  if (lb.hidden) return;
+  lb.classList.remove('is-open');
   lightboxItem = null;
+
+  /* Stay mounted until the shrink finishes, then hide it for real. */
+  clearTimeout(lightboxTimer);
+  const wait = matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 320;
+  lightboxTimer = setTimeout(() => { lb.hidden = true; }, wait);
   /* The cart drawer may still be open behind it, so only release the
      page scroll when nothing else is holding it. */
   if (!byId('drawer').classList.contains('is-open')) document.body.style.overflow = '';
@@ -424,7 +454,7 @@ function init() {
   /* One delegated handler covers featured cards and every menu row. */
   document.addEventListener('click', (e) => {
     const photo = e.target.closest('[data-photo]');
-    if (photo) { openLightbox(photo.dataset.photo); return; }
+    if (photo) { openLightbox(photo.dataset.photo, photo); return; }
     const add = e.target.closest('[data-add]');
     if (add) { addToCart(add.dataset.add); return; }
     const inc = e.target.closest('[data-inc]');
@@ -451,7 +481,7 @@ function init() {
 
   document.addEventListener('keydown', (e) => {
     if (e.key !== 'Escape') return;
-    if (!byId('lightbox').hidden) { closeLightbox(); return; }
+    if (byId('lightbox').classList.contains('is-open')) { closeLightbox(); return; }
     if (byId('drawer').classList.contains('is-open')) closeDrawer();
   });
 
