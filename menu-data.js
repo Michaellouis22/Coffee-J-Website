@@ -115,7 +115,7 @@ window.CJ_MENU = [
   { id: 'bakwan-udang',       cat: 'snacks', name: 'Bakwan Udang', price: 35000, desc: 'Bakwan goreng isi udang' },
   { id: 'indomie-jadoel',     cat: 'snacks', name: 'Indomie Goreng Jadoel', price: 18000, desc: 'Indomie goreng disajikan sederhana' },
   { id: 'indomie-kuah',       cat: 'snacks', name: 'Indomie Goreng Kuah', price: 20000, desc: 'Indomie kuah hangat' },
-  { id: 'indomie-tac-tac',    cat: 'snacks', name: 'Indomie Goreng Tac Tac', price: 24000, desc: 'Indomie goreng dengan topping tac tac' },
+  { id: 'indomie-tac-tac',    cat: 'snacks', name: 'Indomie Goreng Tac Tac', price: 24000, desc: 'Indomie goreng racikan spesial Coffee J' },
   { id: 'indomie-nyonya',     cat: 'snacks', name: 'Indomie Goreng Spesial Nyonya', price: 35000, desc: 'Indomie goreng bumbu nyonya, porsi spesial' },
   { id: 'jamur-enoki',        cat: 'snacks', name: 'Jamur Enoki Crispy', price: 28000, desc: 'Jamur enoki goreng tepung, renyah' },
   { id: 'tempe-mendoan',      cat: 'snacks', name: 'Tempe Mendoan', price: 20000, desc: 'Tempe goreng tepung tipis, lembut di dalam' },
