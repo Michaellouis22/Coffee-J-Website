@@ -77,11 +77,12 @@ function renderFeatured() {
   byId('featured-grid').innerHTML = items.map((m) => `
     <article class="card">
       ${m.tag ? `<span class="card__tag">${escapeHtml(m.tag)}</span>` : ''}
-      <div class="card__frame">
-        ${m.photo
-          ? `<img src="${photoSrc(m)}" alt="${escapeHtml(m.name)}" loading="lazy"${focusStyle(m)}>`
-          : ''}
-      </div>
+      ${m.photo
+        ? `<button class="card__frame photo-btn" type="button" data-photo="${m.id}"
+                   aria-label="Lihat foto ${escapeHtml(m.name)}">
+             <img src="${photoSrc(m)}" alt="${escapeHtml(m.name)}" loading="lazy"${focusStyle(m)}>
+           </button>`
+        : '<div class="card__frame"></div>'}
       <h3 class="card__name">${escapeHtml(m.name)}</h3>
       ${m.desc ? `<p class="card__desc">${escapeHtml(m.desc)}</p>` : ''}
       <div class="card__foot">
@@ -141,7 +142,11 @@ function renderMenu() {
           ${items.map((m) => `
             <li class="row">
               ${m.photo
-                ? `<img class="row__img" src="${photoSrc(m)}" alt="${escapeHtml(m.name)}" loading="lazy"${focusStyle(m)}>`
+                ? `<button class="photo-btn" type="button" data-photo="${m.id}"
+                           aria-label="Lihat foto ${escapeHtml(m.name)}"
+                           style="border-radius:var(--radius-full);line-height:0">
+                     <img class="row__img" src="${photoSrc(m)}" alt="${escapeHtml(m.name)}" loading="lazy"${focusStyle(m)}>
+                   </button>`
                 : '<span class="row__img row__img--none" aria-hidden="true"></span>'}
               <div class="row__text">
                 <span class="row__name">${escapeHtml(m.name)}</span>
@@ -288,6 +293,54 @@ function submitOrder(e) {
   window.location.href = url;
 }
 
+/* ---------- Dish lightbox ---------- */
+
+let lightboxItem = null;
+let lastFocused = null;
+
+function openLightbox(id) {
+  const item = MENU.find((m) => m.id === id);
+  if (!item || !item.photo) return;
+  lightboxItem = item;
+  lastFocused = document.activeElement;
+
+  const cat = CATEGORIES.find((c) => c.id === item.cat);
+  const img = byId('lightbox-img');
+  img.src = photoSrc(item);
+  img.alt = item.name;
+  byId('lightbox-cat').textContent = cat ? cat.label : '';
+  byId('lightbox-name').textContent = item.name;
+  byId('lightbox-desc').textContent = item.desc || '';
+  /* Most items have no description yet; without one the panel would just be
+     a big empty gap, so don't push the price to the bottom in that case. */
+  byId('lightbox').querySelector('.lightbox__info').classList.toggle('is-bare', !item.desc);
+  const tagEl = byId('lightbox-tag');
+  tagEl.textContent = item.tag || '';
+  tagEl.hidden = !item.tag;
+  byId('lightbox-price').textContent = rupiah(item.price);
+
+  byId('lightbox').hidden = false;
+  document.body.style.overflow = 'hidden';
+  byId('lightbox-close').focus();
+}
+
+function closeLightbox() {
+  byId('lightbox').hidden = true;
+  lightboxItem = null;
+  /* The cart drawer may still be open behind it, so only release the
+     page scroll when nothing else is holding it. */
+  if (!byId('drawer').classList.contains('is-open')) document.body.style.overflow = '';
+  if (lastFocused && lastFocused.isConnected) lastFocused.focus();
+}
+
+function initLightbox() {
+  byId('lightbox-close').addEventListener('click', closeLightbox);
+  byId('lightbox-backdrop').addEventListener('click', closeLightbox);
+  byId('lightbox-add').addEventListener('click', () => {
+    if (lightboxItem) addToCart(lightboxItem.id);
+  });
+}
+
 /* ---------- Menu search ---------- */
 
 function initMenuSearch() {
@@ -366,9 +419,12 @@ function init() {
   });
 
   initMenuSearch();
+  initLightbox();
 
   /* One delegated handler covers featured cards and every menu row. */
   document.addEventListener('click', (e) => {
+    const photo = e.target.closest('[data-photo]');
+    if (photo) { openLightbox(photo.dataset.photo); return; }
     const add = e.target.closest('[data-add]');
     if (add) { addToCart(add.dataset.add); return; }
     const inc = e.target.closest('[data-inc]');
@@ -394,7 +450,9 @@ function init() {
   });
 
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && byId('drawer').classList.contains('is-open')) closeDrawer();
+    if (e.key !== 'Escape') return;
+    if (!byId('lightbox').hidden) { closeLightbox(); return; }
+    if (byId('drawer').classList.contains('is-open')) closeDrawer();
   });
 
   initCharacterEntrance();

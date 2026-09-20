@@ -303,6 +303,27 @@
   </div>
 </footer>
 
+<!-- ============ DISH LIGHTBOX ============ -->
+<div class="lightbox" id="lightbox" hidden role="dialog" aria-modal="true" aria-labelledby="lightbox-name">
+  <div class="lightbox__backdrop" id="lightbox-backdrop"></div>
+  <div class="lightbox__panel">
+    <button class="lightbox__close" id="lightbox-close" type="button" aria-label="Tutup">&times;</button>
+    <figure class="lightbox__media">
+      <img id="lightbox-img" src="" alt="">
+    </figure>
+    <div class="lightbox__info">
+      <p class="eyebrow" id="lightbox-cat"></p>
+      <h2 class="lightbox__name" id="lightbox-name"></h2>
+      <span class="lightbox__tag" id="lightbox-tag" hidden></span>
+      <p class="lightbox__desc" id="lightbox-desc"></p>
+      <div class="lightbox__foot">
+        <span class="lightbox__price" id="lightbox-price"></span>
+        <button class="btn btn--primary" id="lightbox-add" type="button">Tambah ke keranjang</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ============ CART DRAWER ============ -->
 <div class="scrim" id="scrim"></div>
 

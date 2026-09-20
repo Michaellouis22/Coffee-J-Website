@@ -1032,3 +1032,146 @@ a { color: inherit; }
 
   .footer li { margin-bottom: 14px; }
 }
+
+/* ---------- Dish lightbox ----------
+   The circular frames crop most of each photo away; tapping one opens the
+   whole uncropped image with the dish's details beside it. */
+
+.photo-btn {
+  cursor: zoom-in;
+  border: none;
+  padding: 0;
+  background: none;
+  transition: transform .25s ease;
+}
+.photo-btn:hover { transform: scale(1.04); }
+.photo-btn:focus-visible { outline: 2px solid var(--terracotta); outline-offset: 3px; }
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+.lightbox[hidden] { display: none; }
+
+.lightbox__backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(28, 17, 10, .78);
+}
+
+.lightbox__panel {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(280px, .85fr);
+  gap: 0;
+  width: min(940px, 100%);
+  max-height: min(86vh, 720px);
+  background: var(--bone);
+  border-radius: var(--radius-large);
+  overflow: hidden;
+}
+
+.lightbox__media {
+  margin: 0;
+  background: var(--espresso);
+  display: grid;
+  place-items: center;
+  min-height: 0;
+}
+.lightbox__media img {
+  width: 100%;
+  height: 100%;
+  max-height: min(86vh, 720px);
+  object-fit: contain;   /* the whole photo, never cropped */
+}
+
+.lightbox__info {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.lightbox__name {
+  font-size: var(--text-heading);
+  line-height: 1.15;
+  margin: 0 0 14px;
+}
+.lightbox__desc {
+  font-size: var(--text-body-lg);
+  line-height: 1.6;
+  margin: 0 0 24px;
+  opacity: .85;
+}
+.lightbox__desc:empty { display: none; }
+
+.lightbox__foot {
+  margin-top: auto;
+  padding-top: 20px;
+  border-top: 1px solid var(--sand);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.lightbox__price {
+  font-family: var(--font-display);
+  font-size: var(--text-heading-sm);
+  letter-spacing: .03em;
+}
+
+.lightbox__close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  z-index: 2;
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  border: none;
+  background: var(--espresso);
+  color: var(--bone);
+  font-size: 22px;
+  line-height: 1;
+  cursor: pointer;
+}
+.lightbox__close:hover { background: var(--terracotta); }
+
+@media (max-width: 760px) {
+  .lightbox { padding: 0; }
+  .lightbox__panel {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr;
+    width: 100%;
+    max-height: 100%;
+    height: 100%;
+    border-radius: 0;
+  }
+  .lightbox__media img { max-height: 46vh; }
+  .lightbox__info { padding: 24px 20px 28px; }
+  .lightbox__name { font-size: var(--text-heading-sm); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .photo-btn { transition: none; }
+  .photo-btn:hover { transform: none; }
+}
+
+.lightbox__tag {
+  align-self: flex-start;
+  background: var(--honey);
+  color: var(--espresso);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: var(--radius-full);
+  margin-bottom: 18px;
+}
+/* No description yet: keep the block compact instead of a tall empty gap. */
+.lightbox__info.is-bare .lightbox__foot { margin-top: 28px; }
