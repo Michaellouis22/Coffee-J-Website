@@ -314,7 +314,19 @@ function anchorToMenu() {
     /* Always instant: the page ignores scroll-behavior here on purpose, since
        gliding across 25,000px would be worse than the problem being fixed. */
     window.scrollTo({ top: Math.max(0, target), behavior: 'instant' });
+    flashMenu();
   });
+}
+
+/* A brief wash behind the first heading, so landing on a category reads as
+   arriving somewhere rather than the list quietly swapping underneath. */
+function flashMenu() {
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  const list = byId('menu-list');
+  if (!list) return;
+  list.classList.remove('is-fresh');
+  void list.offsetWidth;          /* restart the animation on repeat taps */
+  list.classList.add('is-fresh');
 }
 
 /* ---------- Dish lightbox ---------- */

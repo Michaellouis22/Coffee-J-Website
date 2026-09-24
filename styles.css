@@ -1213,3 +1213,33 @@ a { color: inherit; }
   .lightbox__panel { opacity: 1; transform: none; }
   .lightbox__media img { transform: none; }
 }
+
+/* ---------- Arrival flash ----------
+   Filtering swaps the list silently, which can read as nothing happening.
+   A brief wash behind the first heading, plus a short fade on the list,
+   confirms the jump the way arriving at an anchor would. */
+
+@keyframes cj-list-in {
+  from { opacity: .35; transform: translateY(6px); }
+  to   { opacity: 1;   transform: none; }
+}
+
+@keyframes cj-arrive {
+  0%   { background-color: rgba(179, 87, 44, .18); }
+  70%  { background-color: rgba(179, 87, 44, .12); }
+  100% { background-color: rgba(179, 87, 44, 0); }
+}
+
+#menu-list.is-fresh { animation: cj-list-in .3s ease-out; }
+
+#menu-list.is-fresh .group:first-of-type .group__head,
+#menu-list.is-fresh .search-empty {
+  animation: cj-arrive .9s ease-out;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #menu-list.is-fresh,
+  #menu-list.is-fresh .group:first-of-type .group__head,
+  #menu-list.is-fresh .search-empty { animation: none; }
+}
