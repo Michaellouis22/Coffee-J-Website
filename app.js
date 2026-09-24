@@ -293,6 +293,30 @@ function submitOrder(e) {
   window.location.href = url;
 }
 
+/* ---------- Keeping the menu in view ----------
+   Filtering or searching can shrink the page by tens of thousands of pixels.
+   The scroll position does not move, so the content slides out from under the
+   customer and they end up somewhere further down the page. Re-anchor so the
+   filter bar sits just under the header with the results directly below.
+
+   Measured from #menu-list rather than .menu-tools: the tools bar is sticky,
+   so its own rect reports where it is pinned, not where it belongs. */
+function anchorToMenu() {
+  const list = byId('menu-list');
+  const tools = document.querySelector('.menu-tools');
+  const header = document.querySelector('.header');
+  if (!list || !tools) return;
+
+  requestAnimationFrame(() => {
+    const headerH = header ? header.getBoundingClientRect().height : 0;
+    const toolsH = tools.getBoundingClientRect().height;
+    const target = list.getBoundingClientRect().top + window.scrollY - headerH - toolsH;
+    /* Always instant: the page ignores scroll-behavior here on purpose, since
+       gliding across 25,000px would be worse than the problem being fixed. */
+    window.scrollTo({ top: Math.max(0, target), behavior: 'instant' });
+  });
+}
+
 /* ---------- Dish lightbox ---------- */
 
 let lightboxItem = null;
@@ -384,6 +408,7 @@ function initMenuSearch() {
     /* Searching spans every category, so reset the pills to "Semua". */
     if (query.trim() && activeCat !== 'all') { activeCat = 'all'; renderCatNav(); }
     renderMenu();
+    anchorToMenu();
   };
 
   input.addEventListener('input', apply);
@@ -446,6 +471,7 @@ function init() {
     if (query) { query = ''; byId('menu-search').value = ''; byId('menu-search-clear').hidden = true; }
     renderCatNav();
     renderMenu();
+    anchorToMenu();
   });
 
   initMenuSearch();
