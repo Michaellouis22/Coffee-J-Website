@@ -104,6 +104,15 @@ function renderCatNav() {
   `).join('');
 }
 
+function emptyState(title, text, action) {
+  return `
+    <div class="search-empty">
+      <strong>${title}</strong>
+      <p>${text}</p>
+      ${action}
+    </div>`;
+}
+
 function renderMenu() {
   const q = norm(query.trim());
   const searching = q.length > 0;
@@ -119,12 +128,18 @@ function renderMenu() {
     ? `<p class="search-summary">${pool.length} menu cocok dengan “${escapeHtml(query.trim())}”</p>`
     : '';
 
+  /* menu-data.js failed to load: say so instead of showing a blank section. */
+  if (!MENU.length) {
+    byId('menu-list').innerHTML = emptyState('Menu belum bisa dimuat',
+      'Muat ulang halaman, atau tanya menu langsung lewat WhatsApp.',
+      `<a class="btn btn--primary btn--sm" href="https://wa.me/${WA_NUMBER}" target="_blank" rel="noopener">Chat WhatsApp</a>`);
+    return;
+  }
+
   if (searching && !pool.length) {
-    byId('menu-list').innerHTML = `
-      <div class="search-empty">
-        <strong>Tidak ada menu yang cocok</strong>
-        <p>Coba kata lain, misalnya “kopi”, “ayam”, atau “roti bakar”.</p>
-      </div>`;
+    byId('menu-list').innerHTML = emptyState('Tidak ada menu yang cocok',
+      'Coba kata lain, misalnya “kopi”, “ayam”, atau “roti bakar”.',
+      '<button class="btn btn--outline btn--sm" type="button" data-clear-search>Tampilkan semua menu</button>');
     return;
   }
 
@@ -170,6 +185,7 @@ function renderCart() {
 
   byId('cart-count').textContent = count;
   byId('cart-count').hidden = count === 0;
+  byId('cart-count-sr').textContent = count ? `, ${count} item` : ', kosong';
 
   const body = byId('cart-lines');
   const foot = byId('cart-foot');
@@ -182,6 +198,7 @@ function renderCart() {
           <path d="M11 16h26l-2.5 24h-21L11 16Z"/><path d="M18 16v-3a6 6 0 0 1 12 0v3"/>
         </svg>
         <p>Keranjang masih kosong.<br>Pilih menu dulu, ya.</p>
+        <a class="btn btn--primary" href="#menu" data-close-drawer>Lihat menu</a>
       </div>`;
     foot.hidden = true;
     return;
@@ -192,7 +209,7 @@ function renderCart() {
     <div class="line">
       <div>
         <div class="line__name">${escapeHtml(l.item.name)}</div>
-        <div class="line__unit">${rupiah(l.item.price)} each</div>
+        <div class="line__unit">${rupiah(l.item.price)} / item</div>
         <div class="stepper">
           <button type="button" data-dec="${l.item.id}" aria-label="Kurangi ${escapeHtml(l.item.name)}">&minus;</button>
           <span>${l.qty}</span>
@@ -242,6 +259,8 @@ function closeDrawer() {
   byId('drawer').setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
   showPanel('cart');
+  /* Hand focus back to the cart button rather than losing it to <body>. */
+  if (byId('drawer').contains(document.activeElement)) byId('cart-open').focus();
 }
 
 function showPanel(which) {
@@ -498,7 +517,9 @@ function init() {
     const inc = e.target.closest('[data-inc]');
     if (inc) { bumpQty(inc.dataset.inc, 1); return; }
     const dec = e.target.closest('[data-dec]');
-    if (dec) { bumpQty(dec.dataset.dec, -1); }
+    if (dec) { bumpQty(dec.dataset.dec, -1); return; }
+    if (e.target.closest('[data-close-drawer]')) { closeDrawer(); return; }
+    if (e.target.closest('[data-clear-search]')) byId('menu-search-clear').click();
   });
 
   byId('cart-open').addEventListener('click', openDrawer);

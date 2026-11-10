@@ -74,6 +74,8 @@
 </head>
 <body>
 
+<a class="skip-link" href="#menu">Langsung ke menu</a>
+
 <div class="announce">
   Buka setiap hari 06.30–23.00 · Live music tiap malam · Pesan lewat WhatsApp
 </div>
@@ -94,8 +96,10 @@
     <div class="header__actions">
       <button class="nav-toggle" id="nav-toggle" type="button" aria-expanded="false" aria-controls="nav" aria-label="Buka menu navigasi">☰</button>
       <button class="cart-btn" id="cart-open" type="button">
+        <svg class="cart-btn__icon" viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M11 16h26l-2.5 24h-21L11 16Z"/><path d="M18 16v-3a6 6 0 0 1 12 0v3"/></svg>
         <span class="cart-btn__label">Keranjang</span>
         <span class="cart-btn__count" id="cart-count" hidden>0</span>
+        <span class="sr-only" id="cart-count-sr"></span>
       </button>
     </div>
   </div>
@@ -157,7 +161,12 @@
         </p>
       </div>
 
-      <div class="menu-grid" id="featured-grid"></div>
+      <div class="menu-grid" id="featured-grid" aria-label="Menu pilihan"></div>
+
+      <div class="menu-subhead">
+        <h3>Menu lengkap</h3>
+        <p>Cari nama menu, atau pilih kategori.</p>
+      </div>
 
       <div class="menu-tools">
         <div class="menu-search">
@@ -231,7 +240,7 @@
     <div class="wrap visit">
       <div>
         <p class="eyebrow">Kunjungi</p>
-        <h2 style="font-size:var(--text-heading-lg);line-height:1.15;">Simpang PHB, Bukit</h2>
+        <h2>Simpang PHB, Bukit</h2>
         <dl class="visit__rows">
           <div class="visit__row">
             <dt>Alamat</dt>
@@ -250,7 +259,7 @@
             <dd><a href="https://instagram.com/coffeej_palembang" target="_blank" rel="noopener">@coffeej_palembang</a></dd>
           </div>
         </dl>
-        <div class="hero__actions" style="margin-top:32px;">
+        <div class="hero__actions">
           <a class="btn btn--primary" href="https://wa.me/628117886588" target="_blank" rel="noopener">Chat WhatsApp</a>
           <a class="btn btn--outline" href="https://maps.google.com/?q=Coffee+J+Kedai+Kopi+dan+Resto+Palembang" target="_blank" rel="noopener">Buka di Maps</a>
         </div>
@@ -271,15 +280,15 @@
     <div class="footer__grid">
       <div>
         <a class="logo" href="#top">
-      <img class="logo__img" src="images/logo-light.png" alt="Coffee J — Kedai Kopi & Resto">
-    </a>
+          <img class="logo__img" src="images/logo-light.png" alt="Coffee J — Kedai Kopi & Resto">
+        </a>
         <p class="footer__blurb">
           Kedai kopi &amp; resto di Palembang. Buka dari pagi sampai malam,
           dengan kolam koi, ruang meeting, dan live music.
         </p>
       </div>
       <div>
-        <h4>Jelajahi</h4>
+        <h2 class="footer__title">Jelajahi</h2>
         <ul>
           <li><a href="#menu">Menu</a></li>
           <li><a href="#story">Cerita</a></li>
@@ -288,7 +297,7 @@
         </ul>
       </div>
       <div>
-        <h4>Hubungi</h4>
+        <h2 class="footer__title">Hubungi</h2>
         <ul>
           <li><a href="https://wa.me/628117886588" target="_blank" rel="noopener">+62 811 7886 588</a></li>
           <li><a href="https://instagram.com/coffeej_palembang" target="_blank" rel="noopener">@coffeej_palembang</a></li>
@@ -327,7 +336,7 @@
 <!-- ============ CART DRAWER ============ -->
 <div class="scrim" id="scrim"></div>
 
-<aside class="drawer" id="drawer" aria-hidden="true" aria-label="Keranjang dan checkout">
+<aside class="drawer" id="drawer" aria-hidden="true" aria-labelledby="drawer-title">
   <div class="drawer__head">
     <h2 id="drawer-title">Keranjang</h2>
     <button class="drawer__close" id="drawer-close" type="button" aria-label="Tutup keranjang">×</button>
@@ -357,7 +366,7 @@
       </div>
 
       <div class="field">
-        <label id="mode-label">Tipe pesanan</label>
+        <span class="field__label" id="mode-label">Tipe pesanan</span>
         <div class="choices" role="radiogroup" aria-labelledby="mode-label">
           <input type="radio" name="mode" id="mode-dine" value="Dine-in" checked>
           <label for="mode-dine">Dine-in</label>
